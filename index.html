@@ -21,7 +21,6 @@
    });
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/103356059" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Яндекс.Метрика -->
 
 <style>
   * {
@@ -32,8 +31,6 @@
     height: 100%;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    /* убираю overflow:hidden, чтобы не было проблем с прокруткой на мобиле */
-    /* overflow: hidden; */
     color: #333;
     display: flex;
     justify-content: center;
@@ -47,6 +44,8 @@
     padding: 35px 45px 45px 45px;
     max-width: 640px;
     width: 100%;
+    max-height: 80vh; /* ограничиваем высоту */
+    overflow-y: auto; /* прокрутка если контент большой */
     box-shadow: 0 8px 20px rgba(0,0,0,0.12);
     z-index: 10;
   }
@@ -233,6 +232,7 @@
     .container {
       padding: 25px 20px 30px 20px;
       border-radius: 12px;
+      max-height: 90vh;
     }
     h1 {
       font-size: 1.4rem;
@@ -253,6 +253,7 @@
   @media (min-width: 481px) and (max-width: 768px) {
     .container {
       padding: 30px 30px 40px 30px;
+      max-height: 85vh;
     }
     h1 {
       font-size: 1.6rem;
@@ -368,126 +369,116 @@
     { question: "Ты учишься чему-то новому, и вдруг делаешь ошибку. Что делаешь?", answers: [
       { text: "Анализирую, делаю выводы и пробую снова", points: 7 },
       { text: "Спрашиваю у других совета, как исправить", points: 10 },
-      { text: "Размышляю в тишине и учусь на опыте", points: 4 },
-      { text: "Расстраиваюсь и боюсь продолжать", points: 1 }
+      { text: "Размышляю в тишине", points: 4 },
+      { text: "Разочаровываюсь и хочу бросить", points: 1 }
     ]},
-    { question: "Ты чувствуешь, что теряешь мотивацию. Что поможет?", answers: [
-      { text: "Поставить конкретную цель и план", points: 7 },
-      { text: "Поддержка друзей или наставника", points: 10 },
-      { text: "Отдохнуть и переключиться на что-то приятное", points: 4 },
-      { text: "Забросить на время, чтобы не расстраиваться", points: 1 }
+    { question: "Тебе нужно выступить перед большой аудиторией. Что чувствуешь?", answers: [
+      { text: "Волнусь, но готовлюсь тщательно", points: 7 },
+      { text: "Чувствую азарт и вдохновение", points: 10 },
+      { text: "Думаю, как сделать выступление интересным", points: 4 },
+      { text: "Очень нервничаю и боюсь", points: 1 }
     ]},
-    { question: "Ты планируешь день. Как?", answers: [
-      { text: "Расписываю подробно по часам", points: 7 },
-      { text: "Держу общую идею, но гибок", points: 10 },
-      { text: "Пишу список, но часто меняю планы", points: 4 },
-      { text: "Не люблю планировать, действую спонтанно", points: 1 }
+    { question: "Ты выбираешь подарок другу. Как поступаешь?", answers: [
+      { text: "Выбираю практичный и нужный подарок", points: 7 },
+      { text: "Покупаю что-то оригинальное и необычное", points: 10 },
+      { text: "Стараюсь понять желания друга", points: 4 },
+      { text: "Покупаю что-то быстро, без раздумий", points: 1 }
     ]},
-    { question: "Когда ты чувствуешь стресс, ты…", answers: [
-      { text: "Активно ищу решение проблемы", points: 7 },
-      { text: "Обсуждаю с близкими, делюсь эмоциями", points: 10 },
-      { text: "Уединяюсь, чтобы успокоиться", points: 4 },
-      { text: "Чувствую себя подавленным и иногда отступаю", points: 1 }
+    { question: "Тебе предлагают новую работу с высокой зарплатой, но неизвестным коллективом. Как ты?", answers: [
+      { text: "Принимаю вызов и готов учиться", points: 10 },
+      { text: "Обдумываю все плюсы и минусы", points: 7 },
+      { text: "Сомневаюсь и спрашиваю совета", points: 4 },
+      { text: "Отказываюсь из-за страха перемен", points: 1 }
     ]},
-    { question: "Ты узнаёшь новую информацию. Как лучше усваивается?", answers: [
-      { text: "Через структурированные заметки и списки", points: 7 },
-      { text: "Через рассказы и живое общение", points: 10 },
-      { text: "Через образы и ассоциации", points: 4 },
-      { text: "Через практические действия и опыт", points: 1 }
-    ]}
+    { question: "Ты отдыхаешь на природе. Чем предпочитаешь заняться?", answers: [
+      { text: "Активные игры и спорт", points: 10 },
+      { text: "Прогулки и разговоры с друзьями", points: 7 },
+      { text: "Чтение и размышления", points: 4 },
+      { text: "Одиночество и медитация", points: 1 }
+    ]},
   ];
 
-  let currentQuestion = 0;
-  let selectedAnswers = new Array(questions.length).fill(null);
-
-  const questionNumberEl = document.getElementById('questionNumber');
-  const questionTextEl = document.getElementById('questionText');
+  const progressBar = document.getElementById('progressBar');
+  const questionNumberElem = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
   const answersContainer = document.getElementById('answersContainer');
   const backButton = document.getElementById('backButton');
-  const progressBar = document.getElementById('progressBar');
-
+  const scoreDisplay = document.getElementById('scoreDisplay');
   const quizContent = document.getElementById('quizContent');
   const resultContent = document.getElementById('resultContent');
-  const scoreDisplay = document.getElementById('scoreDisplay');
+
+  let currentQuestionIndex = 0;
+  let totalPoints = 0;
+  let answersSelected = [];
 
   function renderQuestion() {
-    const q = questions[currentQuestion];
-    questionNumberEl.textContent = `Вопрос ${currentQuestion + 1} из ${questions.length}`;
-    questionTextEl.textContent = q.question;
+    // Если вопросы закончились - показываем результат
+    if (currentQuestionIndex >= questions.length) {
+      showResult();
+      return;
+    }
 
-    // Обновляем прогресс-бар
-    progressBar.style.width = `${((currentQuestion) / questions.length) * 100}%`;
+    const questionObj = questions[currentQuestionIndex];
+    questionNumberElem.textContent = `Вопрос ${currentQuestionIndex + 1} из ${questions.length}`;
+    questionText.textContent = questionObj.question;
 
-    // Очистка предыдущих ответов
     answersContainer.innerHTML = '';
-
-    q.answers.forEach((answer, idx) => {
+    questionObj.answers.forEach((answer, index) => {
       const div = document.createElement('div');
       div.classList.add('answer-option');
       div.textContent = answer.text;
-      div.tabIndex = 0;
-      div.setAttribute('role', 'button');
-      div.setAttribute('aria-pressed', 'false');
-
-      // Если выбран — подсвечиваем
-      if (selectedAnswers[currentQuestion] === idx) {
+      div.dataset.points = answer.points;
+      if (answersSelected[currentQuestionIndex] === index) {
         div.classList.add('selected');
-        div.setAttribute('aria-pressed', 'true');
       }
-
-      // Выбор варианта
-      div.onclick = () => {
-        selectedAnswers[currentQuestion] = idx;
-        // Обновить выделение
-        Array.from(answersContainer.children).forEach((child, i) => {
-          child.classList.toggle('selected', i === idx);
-          child.setAttribute('aria-pressed', i === idx ? 'true' : 'false');
-        });
-      };
-
-      div.onkeydown = (e) => {
-        if(e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          div.click();
-        }
-      };
-
+      div.addEventListener('click', () => {
+        answersSelected[currentQuestionIndex] = index;
+        updateSelection();
+      });
       answersContainer.appendChild(div);
     });
 
-    // Кнопка назад выключена на первом вопросе
-    backButton.disabled = currentQuestion === 0;
+    // Управление кнопкой назад
+    backButton.disabled = currentQuestionIndex === 0;
+
+    // Обновляем прогресс
+    progressBar.style.width = `${((currentQuestionIndex) / questions.length) * 100}%`;
+  }
+
+  function updateSelection() {
+    // Помечаем выбранный ответ визуально
+    Array.from(answersContainer.children).forEach((child, idx) => {
+      if (idx === answersSelected[currentQuestionIndex]) {
+        child.classList.add('selected');
+      } else {
+        child.classList.remove('selected');
+      }
+    });
   }
 
   function nextQuestion() {
-    if (selectedAnswers[currentQuestion] === null) {
-      alert("Пожалуйста, выберите ответ перед переходом дальше.");
-      return;
-    }
-    if (currentQuestion < questions.length - 1) {
-      currentQuestion++;
-      renderQuestion();
-    } else {
-      // Показываем результат
-      showResult();
-    }
+    // Если ответ не выбран, не двигаемся вперед
+    if (answersSelected[currentQuestionIndex] == null) return alert('Пожалуйста, выберите ответ');
+
+    // Сохраняем баллы
+    const selectedIndex = answersSelected[currentQuestionIndex];
+    totalPoints += questions[currentQuestionIndex].answers[selectedIndex].points;
+
+    currentQuestionIndex++;
+    renderQuestion();
   }
 
   function previousQuestion() {
-    if (currentQuestion > 0) {
-      currentQuestion--;
-      renderQuestion();
+    if (currentQuestionIndex === 0) return;
+    // При возврате нужно убрать баллы предыдущего вопроса
+    if (answersSelected[currentQuestionIndex - 1] != null) {
+      totalPoints -= questions[currentQuestionIndex - 1].answers[answersSelected[currentQuestionIndex - 1]].points;
     }
+    currentQuestionIndex--;
+    renderQuestion();
   }
 
   function showResult() {
-    // Считаем сумму баллов
-    let totalPoints = 0;
-    for(let i=0; i<questions.length; i++) {
-      const answerIdx = selectedAnswers[i];
-      totalPoints += questions[i].answers[answerIdx].points;
-    }
-
     quizContent.style.display = 'none';
     resultContent.style.display = 'block';
 
@@ -513,10 +504,14 @@
   // Инициализация
   renderQuestion();
 
-  // Чтобы сразу после выбора варианта перейти к следующему вопросу (необязательно)
+  // Обработка клика по ответам
   answersContainer.addEventListener('click', (e) => {
-    if(e.target.classList.contains('answer-option')) {
-      // Можно добавить задержку для плавности
+    if (e.target.classList.contains('answer-option')) {
+      // Добавляем выделение выбранного варианта
+      answersSelected[currentQuestionIndex] = Array.from(answersContainer.children).indexOf(e.target);
+      updateSelection();
+
+      // Чтобы сразу после выбора варианта перейти к следующему вопросу
       setTimeout(nextQuestion, 300);
     }
   });
