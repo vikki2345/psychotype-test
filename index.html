@@ -4,6 +4,25 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Тест на психотип</title>
+
+<!-- Яндекс.Метрика -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(103356059, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/103356059" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Яндекс.Метрика -->
+
 <style>
   * {
     box-sizing: border-box;
@@ -13,7 +32,8 @@
     height: 100%;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    overflow: hidden;
+    /* убираю overflow:hidden, чтобы не было проблем с прокруткой на мобиле */
+    /* overflow: hidden; */
     color: #333;
     display: flex;
     justify-content: center;
@@ -206,6 +226,48 @@
     0% { transform: translateY(0) translateX(0); opacity: 0.25; }
     50% { opacity: 0.7; }
     100% { transform: translateY(-105vh) translateX(10px); opacity: 0; }
+  }
+
+  /* Адаптив под мобильные и планшеты */
+  @media (max-width: 480px) {
+    .container {
+      padding: 25px 20px 30px 20px;
+      border-radius: 12px;
+    }
+    h1 {
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+    }
+    .question-text {
+      font-size: 1.1rem;
+    }
+    .answer-option {
+      padding: 12px 18px;
+      font-size: 0.95rem;
+    }
+    .btn-back {
+      padding: 12px 25px;
+      font-size: 1rem;
+    }
+  }
+  @media (min-width: 481px) and (max-width: 768px) {
+    .container {
+      padding: 30px 30px 40px 30px;
+    }
+    h1 {
+      font-size: 1.6rem;
+    }
+    .question-text {
+      font-size: 1.2rem;
+    }
+    .answer-option {
+      font-size: 1rem;
+      padding: 14px 20px;
+    }
+    .btn-back {
+      font-size: 1.05rem;
+      padding: 14px 30px;
+    }
   }
 </style>
 </head>
