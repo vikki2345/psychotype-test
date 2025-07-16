@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест на психотип. Всего 15 вопросов. Отвечай честно, чтобы результат был точным.</title>
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: rgba(255,255,255,0.9);
+      border-radius: 20px;
+      padding: 30px 40px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 700;
+      font-size: 2.5em;
+    }
+    .progress-bar-container {
+      background: #d1d9ff;
+      border-radius: 50px;
+      overflow: hidden;
+      height: 12px;
+      margin-bottom: 25px;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+    .question-number {
+      font-weight: 600;
+      color: #667eea;
+      margin-bottom: 8px;
+    }
+    .question-text {
+      font-size: 1.4em;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    .answers-container {
+      display: grid;
+      gap: 15px;
+    }
+    .answer-option {
+      background: #e5ebff;
+      padding: 15px 20px;
+      border-radius: 15px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      font-size: 1.1em;
+      transition: all 0.3s ease;
+    }
+    .answer-option:hover {
+      background: #c5d1ff;
+      border-color: #667eea;
+    }
+    .answer-option.selected {
+      background: #667eea;
+      color: white;
+      border-color: #4a57a3;
+    }
+    .navigation-buttons {
+      margin-top: 30px;
+      display: flex;
+      justify-content: flex-start;
+    }
+    .btn {
+      background: #667eea;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 12px 28px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      user-select: none;
+    }
+    .btn:disabled {
+      background: #a3abe1;
+      cursor: not-allowed;
+    }
+    .btn:hover:not(:disabled) {
+      background: #4a57a3;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Тест на психотип. Всего 15 вопросов. Отвечай честно, чтобы результат был точным.</h1>
+
+    <div class="progress-bar-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="question-number" id="questionNumber"></div>
+    <div class="question-text" id="questionText"></div>
+
+    <div class="answers-container" id="answersContainer"></div>
+
+    <div class="navigation-buttons">
+      <button class="btn" id="prevBtn" onclick="previousQuestion()" disabled>Назад</button>
+    </div>
+  </div>
+
+<script>
+  const questions = [
+    {
+      question: "Твой друг неожиданно отменяет ВАЖНУЮ встречу. Как ты реагируешь?",
+      answers: [
+        { text: "Быстро адаптируюсь и ищу альтернативу", points: 10 },
+        { text: "Чувствую раздражение, но стараюсь не показывать", points: 7 },
+        { text: "Задумываюсь, почему так вышло, немного переживаю", points: 4 },
+        { text: "Расстраиваюсь и долго об этом думаю", points: 1 }
+      ]
+    },
+  ];
+
+  // Дублируем 15 раз для демонстрации
+  while (questions.length < 15) {
+    questions.push(JSON.parse(JSON.stringify(questions[0])));
+  }
+
+  const psychotypes = [
+    { range: [14, 44], url: "https://teletype.in/@viktoriyagro/dhhksxol6djfckldvguj21" },
+    { range: [45, 74], url: "https://teletype.in/@viktoriyagro/dsikfvmkgbksgbfc2hjndf24y" },
+    { range: [75, 104], url: "https://teletype.in/@viktoriyagro/ghkf6sgbnbcks5hdh3s" },
+    { range: [105, 134], url: "https://teletype.in/@viktoriyagro/kkfngujgnbssdvlodskes4gb1" },
+    { range: [135, 180], url: "https://teletype.in/@viktoriyagro/ikdnvujbszsfr6cjkydjnn44" }
+  ];
+
+  let currentQuestion = 0;
+  const selectedAnswers = new Array(questions.length).fill(null);
+
+  const progressBar = document.getElementById('progressBar');
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  const answersContainer = document.getElementById('answersContainer');
+  const prevBtn = document.getElementById('prevBtn');
+
+  function loadQuestion() {
+    progressBar.style.width = ((currentQuestion) / questions.length) * 100 + '%';
+    questionNumber.textContent = `Вопрос ${currentQuestion + 1} из ${questions.length}`;
+    questionText.textContent = questions[currentQuestion].question;
+    answersContainer.innerHTML = '';
+
+    questions[currentQuestion].answers.forEach((answer, index) => {
+      const div = document.createElement('div');
+      div.className = 'answer-option';
+      div.textContent = answer.text;
+
+      if (selectedAnswers[currentQuestion] === index) {
+        div.classList.add('selected');
+      }
+
+      div.addEventListener('click', () => {
+        selectedAnswers[currentQuestion] = index;
+        updateAnswersSelection();
+
+        setTimeout(() => {
+          if (currentQuestion === questions.length - 1) {
+            finishQuiz();
+          } else {
+            currentQuestion++;
+            loadQuestion();
+          }
+        }, 300);
+      });
+
+      answersContainer.appendChild(div);
+    });
+
+    prevBtn.disabled = currentQuestion === 0;
+  }
+
+  function updateAnswersSelection() {
+    const options = answersContainer.querySelectorAll('.answer-option');
+    options.forEach((opt, idx) => {
+      if (idx === selectedAnswers[currentQuestion]) {
+        opt.classList.add('selected');
+      } else {
+        opt.classList.remove('selected');
+      }
+    });
+  }
+
+  function previousQuestion() {
+    if (currentQuestion === 0) return;
+    currentQuestion--;
+    loadQuestion();
+  }
+
+  function calculateScore() {
+    return selectedAnswers.reduce((sum, answerIdx, questionIdx) => {
+      if (answerIdx === null) return sum;
+      return sum + questions[questionIdx].answers[answerIdx].points;
+    }, 0);
+  }
+
+  function getResult() {
+    const score = calculateScore();
+    for (const type of psychotypes) {
+      if (score >= type.range[0] && score <= type.range[1]) {
+        return type.url;
+      }
+    }
+    return psychotypes[0].url;
+  }
+
+  function finishQuiz() {
+    const redirectUrl = getResult();
+    window.location.href = redirectUrl;
+  }
+
+  loadQuestion();
+</script>
+</body>
+</html>
