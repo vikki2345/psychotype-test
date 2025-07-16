@@ -1,260 +1,465 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Тест на психотип. Всего 15 вопросов. Отвечай честно, чтобы результат был точным.</title>
-  <style>
-    * {
-      margin: 0; padding: 0; box-sizing: border-box;
-    }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-    .container {
-      max-width: 800px;
-      margin: 40px auto;
-      background: rgba(255,255,255,0.9);
-      border-radius: 20px;
-      padding: 30px 40px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-    }
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-weight: 700;
-      font-size: 2.5em;
-    }
-    .progress-bar-container {
-      background: #d1d9ff;
-      border-radius: 50px;
-      overflow: hidden;
-      height: 12px;
-      margin-bottom: 25px;
-    }
-    .progress-bar {
-      height: 100%;
-      background: linear-gradient(90deg, #667eea, #764ba2);
-      width: 0%;
-      transition: width 0.5s ease;
-    }
-    .question-number {
-      font-weight: 600;
-      color: #667eea;
-      margin-bottom: 8px;
-    }
-    .question-text {
-      font-size: 1.4em;
-      margin-bottom: 20px;
-      color: #333;
-    }
-    .answers-container {
-      display: grid;
-      gap: 15px;
-    }
-    .answer-option {
-      background: #e5ebff;
-      padding: 15px 20px;
-      border-radius: 15px;
-      cursor: pointer;
-      border: 2px solid transparent;
-      font-size: 1.1em;
-      transition: all 0.3s ease;
-    }
-    .answer-option:hover {
-      background: #c5d1ff;
-      border-color: #667eea;
-    }
-    .answer-option.selected {
-      background: #667eea;
-      color: white;
-      border-color: #4a57a3;
-    }
-    .navigation-buttons {
-      margin-top: 30px;
-      display: flex;
-      justify-content: flex-start;
-    }
-    .btn {
-      background: #667eea;
-      color: white;
-      border: none;
-      border-radius: 30px;
-      padding: 12px 28px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.3s ease;
-      user-select: none;
-    }
-    .btn:disabled {
-      background: #a3abe1;
-      cursor: not-allowed;
-    }
-    .btn:hover:not(:disabled) {
-      background: #4a57a3;
-    }
-  </style>
-
-  <!-- Yandex.Metrika counter -->
-  <script type="text/javascript" >
-    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-    m[i].l=1*new Date();
-    for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-
-    ym(103356059, "init", {
-      clickmap:true,
-      trackLinks:true,
-      accurateTrackBounce:true,
-      webvisor:true
-    });
-  </script>
-  <!-- /Yandex.Metrika counter -->
-
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Тест на психотип</title>
+<style>
+  * {
+    box-sizing: border-box;
+  }
+  body, html {
+    margin: 0; padding: 0;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    overflow: hidden;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  .container {
+    position: relative;
+    background: rgba(255,255,255,0.97);
+    border-radius: 18px;
+    padding: 35px 45px 45px 45px;
+    max-width: 640px;
+    width: 100%;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    z-index: 10;
+  }
+  h1 {
+    margin-top: 0;
+    font-weight: 700;
+    font-size: 1.8rem;
+    color: #4a4a90;
+    text-align: center;
+    margin-bottom: 25px;
+    user-select: none;
+  }
+  .progress-container {
+    width: 100%;
+    height: 12px;
+    background: #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 28px;
+  }
+  .progress-bar {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    border-radius: 10px;
+    transition: width 0.4s ease;
+  }
+  .question-number {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #667eea;
+    margin-bottom: 6px;
+    user-select: none;
+  }
+  .question-text {
+    font-size: 1.35rem;
+    margin-bottom: 22px;
+    color: #222244;
+  }
+  .answers-container {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .answer-option {
+    background: #f0f4ff;
+    border-radius: 14px;
+    padding: 15px 22px;
+    cursor: pointer;
+    border: 2.8px solid transparent;
+    font-size: 1.05rem;
+    color: #333;
+    user-select: none;
+    box-shadow: 0 0 0 rgba(0,0,0,0);
+    transition: all 0.3s ease;
+  }
+  .answer-option:hover {
+    background: #dbe4ff;
+  }
+  .answer-option.selected {
+    background: #667eea;
+    color: white;
+    border-color: #4a5fc1;
+    box-shadow: 0 0 10px #667eeaaa;
+  }
+  .btn-back {
+    margin-top: 30px;
+    padding: 14px 32px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    user-select: none;
+    box-shadow: 0 4px 8px rgba(102, 126, 234, 0.5);
+    transition: background-color 0.3s ease;
+    display: block;
+    margin-left: auto;
+  }
+  .btn-back:hover:not(:disabled) {
+    background: #5566cc;
+  }
+  .btn-back:disabled {
+    background: #a3b0f9;
+    cursor: default;
+    box-shadow: none;
+  }
+  #resultContent {
+    text-align: center;
+  }
+  .score-display {
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: #667eea;
+    margin-bottom: 16px;
+    user-select: none;
+  }
+  .redirect-message {
+    font-size: 1.3rem;
+    color: #444;
+    user-select: none;
+  }
+  .bubbles {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .bubble {
+    position: absolute;
+    background: rgba(255,255,255,0.15);
+    border-radius: 50%;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  .bubble1 {
+    width: 100px;
+    height: 100px;
+    bottom: -120px;
+    left: 10%;
+    animation-name: floatUp1;
+    animation-duration: 22s;
+    animation-delay: 0s;
+  }
+  .bubble2 {
+    width: 60px;
+    height: 60px;
+    bottom: -80px;
+    left: 30%;
+    animation-name: floatUp2;
+    animation-duration: 18s;
+    animation-delay: 5s;
+  }
+  .bubble3 {
+    width: 40px;
+    height: 40px;
+    bottom: -60px;
+    left: 55%;
+    animation-name: floatUp3;
+    animation-duration: 26s;
+    animation-delay: 2s;
+  }
+  .bubble4 {
+    width: 120px;
+    height: 120px;
+    bottom: -140px;
+    left: 75%;
+    animation-name: floatUp1;
+    animation-duration: 28s;
+    animation-delay: 3s;
+  }
+  .bubble5 {
+    width: 80px;
+    height: 80px;
+    bottom: -100px;
+    left: 85%;
+    animation-name: floatUp2;
+    animation-duration: 24s;
+    animation-delay: 7s;
+  }
+  @keyframes floatUp1 {
+    0% { transform: translateY(0) translateX(0); opacity: 0.3; }
+    50% { opacity: 0.6; }
+    100% { transform: translateY(-110vh) translateX(20px); opacity: 0; }
+  }
+  @keyframes floatUp2 {
+    0% { transform: translateY(0) translateX(0); opacity: 0.2; }
+    50% { opacity: 0.5; }
+    100% { transform: translateY(-100vh) translateX(-30px); opacity: 0; }
+  }
+  @keyframes floatUp3 {
+    0% { transform: translateY(0) translateX(0); opacity: 0.25; }
+    50% { opacity: 0.7; }
+    100% { transform: translateY(-105vh) translateX(10px); opacity: 0; }
+  }
+</style>
 </head>
 <body>
 
-  <!-- Яндекс.Метрика для пользователей с отключенным JS -->
-  <noscript>
-    <div>
-      <img src="https://mc.yandex.ru/watch/103356059" style="position:absolute; left:-9999px;" alt="" />
-    </div>
-  </noscript>
+<div class="bubbles" aria-hidden="true">
+  <div class="bubble bubble1"></div>
+  <div class="bubble bubble2"></div>
+  <div class="bubble bubble3"></div>
+  <div class="bubble bubble4"></div>
+  <div class="bubble bubble5"></div>
+</div>
 
-  <div class="container">
-    <h1>Тест на психотип. Всего 15 вопросов. Отвечай честно, чтобы результат был точным.</h1>
+<div class="container" role="main" aria-label="Тест на психотип">
 
-    <div class="progress-bar-container">
-      <div class="progress-bar" id="progressBar"></div>
-    </div>
+  <h1>Тест на психотип — 15 вопросов. Отвечайте честно, чтобы получить точный результат</h1>
 
+  <div class="progress-container" aria-hidden="true">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <div id="quizContent" aria-live="polite" aria-atomic="true">
     <div class="question-number" id="questionNumber"></div>
     <div class="question-text" id="questionText"></div>
-
     <div class="answers-container" id="answersContainer"></div>
-
-    <div class="navigation-buttons">
-      <button class="btn" id="prevBtn" onclick="previousQuestion()" disabled>Назад</button>
-    </div>
+    <button id="backButton" class="btn-back" onclick="previousQuestion()" aria-label="Назад к предыдущему вопросу">Назад</button>
   </div>
+
+  <div id="resultContent" style="display:none;" role="region" aria-live="polite" aria-atomic="true">
+    <div class="score-display" id="scoreDisplay"></div>
+    <div class="redirect-message">Через 3 секунды покажу результат теста...</div>
+  </div>
+
+</div>
 
 <script>
   const questions = [
-    {
-      question: "Твой друг неожиданно отменяет ВАЖНУЮ встречу. Как ты реагируешь?",
-      answers: [
-        { text: "Быстро адаптируюсь и ищу альтернативу", points: 10 },
-        { text: "Чувствую раздражение, но стараюсь не показывать", points: 7 },
-        { text: "Задумываюсь, почему так вышло, немного переживаю", points: 4 },
-        { text: "Расстраиваюсь и долго об этом думаю", points: 1 }
-      ]
-    },
-  ];
-
-  // Дублируем 15 раз для демонстрации
-  while (questions.length < 15) {
-    questions.push(JSON.parse(JSON.stringify(questions[0])));
-  }
-
-  const psychotypes = [
-    { range: [14, 44], url: "https://teletype.in/@viktoriyagro/dhhksxol6djfckldvguj21" },
-    { range: [45, 74], url: "https://teletype.in/@viktoriyagro/dsikfvmkgbksgbfc2hjndf24y" },
-    { range: [75, 104], url: "https://teletype.in/@viktoriyagro/ghkf6sgbnbcks5hdh3s" },
-    { range: [105, 134], url: "https://teletype.in/@viktoriyagro/kkfngujgnbssdvlodskes4gb1" },
-    { range: [135, 180], url: "https://teletype.in/@viktoriyagro/ikdnvujbszsfr6cjkydjnn44" }
+    { question: "Твой друг неожиданно отменяет ВАЖНУЮ встречу. Как ты реагируешь?", answers: [
+      { text: "Быстро адаптируюсь и ищу альтернативу", points: 10 },
+      { text: "Чувствую раздражение, но стараюсь не показывать", points: 7 },
+      { text: "Задумываюсь, почему так вышло, немного переживаю", points: 4 },
+      { text: "Расстраиваюсь и долго об этом думаю", points: 1 }
+    ]},
+    { question: "Ты приехал в новый город и хочешь БЫСТРО сориентироваться. Что делаешь?", answers: [
+      { text: "Составляю карту и планирую маршрут", points: 7 },
+      { text: "Спрашиваю у местных и ориентируюсь на разговоры", points: 10 },
+      { text: "Просто гуляю, надеюсь найти что-то интересное", points: 4 },
+      { text: "Тревожусь, боюсь заблудиться", points: 1 }
+    ]},
+    { question: "Решил выучить новую тему, но ОБЪЕМ ИНФОРМАЦИИ ОЧЕНЬ БОЛЬШОЙ. Как учишь?", answers: [
+      { text: "Разбиваю на части и учусь по шагам", points: 7 },
+      { text: "Слушаю подкасты, обсуждаю с друзьями", points: 10 },
+      { text: "Визуализирую и связываю с образами", points: 4 },
+      { text: "Откладываю, сложно сосредоточиться", points: 1 }
+    ]},
+    { question: "После тяжелого дня вечером ты…", answers: [
+      { text: "Занимаюсь спортом или гуляю, чтобы переключиться", points: 10 },
+      { text: "Общаюсь с друзьями онлайн или лично", points: 7 },
+      { text: "Смотрю сериал или читаю книгу в тишине", points: 4 },
+      { text: "Предпочитаю побыть один и ни с кем не говорить", points: 1 }
+    ]},
+    { question: "Во время разговора замечаешь, что тебя не понимают. Что делаешь?", answers: [
+      { text: "Анализирую и стараюсь улучшить себя", points: 7 },
+      { text: "Защищаюсь и высказываю свое мнение", points: 10 },
+      { text: "Обдумываю в одиночестве, чтобы понять", points: 4 },
+      { text: "Злюсь и иногда опускаю руки", points: 1 }
+    ]},
+    { question: "Ты сталкиваешься с критикой в свой адрес. Реакция?", answers: [
+      { text: "Анализирую и стараюсь улучшить себя", points: 7 },
+      { text: "Защищаюсь и высказываю свое мнение", points: 10 },
+      { text: "Обдумываю в одиночестве, чтобы понять", points: 4 },
+      { text: "Злюсь и иногда опускаю руки", points: 1 }
+    ]},
+    { question: "Тебе нужно быстро переключиться с работы на отдых. Как делаешь?", answers: [
+      { text: "Планирую время и четко разделяю дела", points: 7 },
+      { text: "Встречаюсь с друзьями или занимаюсь хобби", points: 10 },
+      { text: "Стараюсь расслабиться и медитировать", points: 4 },
+      { text: "Тяжело переключаюсь, остаюсь в мыслях", points: 1 }
+    ]},
+    { question: "Ты решил выучить новые слова. Как лучше всего тебе?", answers: [
+      { text: "Учить слова через таблицы и списки", points: 7 },
+      { text: "Запоминать через повторение и разговоры", points: 10 },
+      { text: "Связывать слова с образами и ситуациями", points: 4 },
+      { text: "Учить в движении, через действия", points: 1 }
+    ]},
+    { question: "Когда ты слышишь сложное объяснение, то…", answers: [
+      { text: "Переформулирую в голове проще", points: 7 },
+      { text: "Спрашиваю, чтобы услышать по-другому", points: 10 },
+      { text: "Визуализирую процесс или схему", points: 4 },
+      { text: "Стараюсь представить, как сделать это на практике", points: 1 }
+    ]},
+    { question: "Тебе нужно принять быстрое решение в стрессовой ситуации. Что происходит?", answers: [
+      { text: "Анализирую ситуацию и выбираю оптимальное решение", points: 7 },
+      { text: "Обсуждаю с кем-то и принимаю совместно", points: 10 },
+      { text: "Медлю, чтобы подумать тщательнее", points: 4 },
+      { text: "Боюсь ошибиться и откладываю решение", points: 1 }
+    ]},
+    { question: "Ты учишься чему-то новому, и вдруг делаешь ошибку. Что делаешь?", answers: [
+      { text: "Анализирую, делаю выводы и пробую снова", points: 7 },
+      { text: "Спрашиваю у других совета, как исправить", points: 10 },
+      { text: "Размышляю в тишине и учусь на опыте", points: 4 },
+      { text: "Расстраиваюсь и боюсь продолжать", points: 1 }
+    ]},
+    { question: "Ты чувствуешь, что теряешь мотивацию. Что поможет?", answers: [
+      { text: "Поставить конкретную цель и план", points: 7 },
+      { text: "Поддержка друзей или наставника", points: 10 },
+      { text: "Отдохнуть и переключиться на что-то приятное", points: 4 },
+      { text: "Забросить на время, чтобы не расстраиваться", points: 1 }
+    ]},
+    { question: "Ты планируешь день. Как?", answers: [
+      { text: "Расписываю подробно по часам", points: 7 },
+      { text: "Держу общую идею, но гибок", points: 10 },
+      { text: "Пишу список, но часто меняю планы", points: 4 },
+      { text: "Не люблю планировать, действую спонтанно", points: 1 }
+    ]},
+    { question: "Когда ты чувствуешь стресс, ты…", answers: [
+      { text: "Активно ищу решение проблемы", points: 7 },
+      { text: "Обсуждаю с близкими, делюсь эмоциями", points: 10 },
+      { text: "Уединяюсь, чтобы успокоиться", points: 4 },
+      { text: "Чувствую себя подавленным и иногда отступаю", points: 1 }
+    ]},
+    { question: "Ты узнаёшь новую информацию. Как лучше усваивается?", answers: [
+      { text: "Через структурированные заметки и списки", points: 7 },
+      { text: "Через рассказы и живое общение", points: 10 },
+      { text: "Через образы и ассоциации", points: 4 },
+      { text: "Через практические действия и опыт", points: 1 }
+    ]}
   ];
 
   let currentQuestion = 0;
-  const selectedAnswers = new Array(questions.length).fill(null);
+  let selectedAnswers = new Array(questions.length).fill(null);
 
-  const progressBar = document.getElementById('progressBar');
-  const questionNumber = document.getElementById('questionNumber');
-  const questionText = document.getElementById('questionText');
+  const questionNumberEl = document.getElementById('questionNumber');
+  const questionTextEl = document.getElementById('questionText');
   const answersContainer = document.getElementById('answersContainer');
-  const prevBtn = document.getElementById('prevBtn');
+  const backButton = document.getElementById('backButton');
+  const progressBar = document.getElementById('progressBar');
 
-  function loadQuestion() {
-    progressBar.style.width = ((currentQuestion) / questions.length) * 100 + '%';
-    questionNumber.textContent = `Вопрос ${currentQuestion + 1} из ${questions.length}`;
-    questionText.textContent = questions[currentQuestion].question;
+  const quizContent = document.getElementById('quizContent');
+  const resultContent = document.getElementById('resultContent');
+  const scoreDisplay = document.getElementById('scoreDisplay');
+
+  function renderQuestion() {
+    const q = questions[currentQuestion];
+    questionNumberEl.textContent = `Вопрос ${currentQuestion + 1} из ${questions.length}`;
+    questionTextEl.textContent = q.question;
+
+    // Обновляем прогресс-бар
+    progressBar.style.width = `${((currentQuestion) / questions.length) * 100}%`;
+
+    // Очистка предыдущих ответов
     answersContainer.innerHTML = '';
 
-    questions[currentQuestion].answers.forEach((answer, index) => {
+    q.answers.forEach((answer, idx) => {
       const div = document.createElement('div');
-      div.className = 'answer-option';
+      div.classList.add('answer-option');
       div.textContent = answer.text;
+      div.tabIndex = 0;
+      div.setAttribute('role', 'button');
+      div.setAttribute('aria-pressed', 'false');
 
-      if (selectedAnswers[currentQuestion] === index) {
+      // Если выбран — подсвечиваем
+      if (selectedAnswers[currentQuestion] === idx) {
         div.classList.add('selected');
+        div.setAttribute('aria-pressed', 'true');
       }
 
-      div.addEventListener('click', () => {
-        selectedAnswers[currentQuestion] = index;
-        updateAnswersSelection();
+      // Выбор варианта
+      div.onclick = () => {
+        selectedAnswers[currentQuestion] = idx;
+        // Обновить выделение
+        Array.from(answersContainer.children).forEach((child, i) => {
+          child.classList.toggle('selected', i === idx);
+          child.setAttribute('aria-pressed', i === idx ? 'true' : 'false');
+        });
+      };
 
-        setTimeout(() => {
-          if (currentQuestion === questions.length - 1) {
-            finishQuiz();
-          } else {
-            currentQuestion++;
-            loadQuestion();
-          }
-        }, 300);
-      });
+      div.onkeydown = (e) => {
+        if(e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          div.click();
+        }
+      };
 
       answersContainer.appendChild(div);
     });
 
-    prevBtn.disabled = currentQuestion === 0;
+    // Кнопка назад выключена на первом вопросе
+    backButton.disabled = currentQuestion === 0;
   }
 
-  function updateAnswersSelection() {
-    const options = answersContainer.querySelectorAll('.answer-option');
-    options.forEach((opt, idx) => {
-      if (idx === selectedAnswers[currentQuestion]) {
-        opt.classList.add('selected');
-      } else {
-        opt.classList.remove('selected');
-      }
-    });
+  function nextQuestion() {
+    if (selectedAnswers[currentQuestion] === null) {
+      alert("Пожалуйста, выберите ответ перед переходом дальше.");
+      return;
+    }
+    if (currentQuestion < questions.length - 1) {
+      currentQuestion++;
+      renderQuestion();
+    } else {
+      // Показываем результат
+      showResult();
+    }
   }
 
   function previousQuestion() {
-    if (currentQuestion === 0) return;
-    currentQuestion--;
-    loadQuestion();
-  }
-
-  function calculateScore() {
-    return selectedAnswers.reduce((sum, answerIdx, questionIdx) => {
-      if (answerIdx === null) return sum;
-      return sum + questions[questionIdx].answers[answerIdx].points;
-    }, 0);
-  }
-
-  function getResult() {
-    const score = calculateScore();
-    for (const type of psychotypes) {
-      if (score >= type.range[0] && score <= type.range[1]) {
-        return type.url;
-      }
+    if (currentQuestion > 0) {
+      currentQuestion--;
+      renderQuestion();
     }
-    return psychotypes[0].url;
   }
 
-  function finishQuiz() {
-    const redirectUrl = getResult();
-    window.location.href = redirectUrl;
+  function showResult() {
+    // Считаем сумму баллов
+    let totalPoints = 0;
+    for(let i=0; i<questions.length; i++) {
+      const answerIdx = selectedAnswers[i];
+      totalPoints += questions[i].answers[answerIdx].points;
+    }
+
+    quizContent.style.display = 'none';
+    resultContent.style.display = 'block';
+
+    scoreDisplay.textContent = `Ваш результат: ${totalPoints} баллов`;
+
+    // Задаём прогресс 100%
+    progressBar.style.width = '100%';
+
+    // Через 3 секунды редирект по баллам
+    setTimeout(() => {
+      let url = '';
+      if (totalPoints >= 14 && totalPoints <= 44) url = "https://teletype.in/@viktoriyagro/dhhksxol6djfckldvguj21";
+      else if (totalPoints >= 45 && totalPoints <= 74) url = "https://teletype.in/@viktoriyagro/dsikfvmkgbksgbfc2hjndf24y";
+      else if (totalPoints >= 75 && totalPoints <= 104) url = "https://teletype.in/@viktoriyagro/ghkf6sgbnbcks5hdh3s";
+      else if (totalPoints >= 105 && totalPoints <= 134) url = "https://teletype.in/@viktoriyagro/kkfngujgnbssdvlodskes4gb1";
+      else if (totalPoints >= 135 && totalPoints <= 180) url = "https://teletype.in/@viktoriyagro/ikdnvujbszsfr6cjkydjnn44";
+      else url = "https://teletype.in/@viktoriyagro/dhhksxol6djfckldvguj21"; // по умолчанию первая ссылка
+
+      window.location.href = url;
+    }, 3000);
   }
 
-  loadQuestion();
+  // Инициализация
+  renderQuestion();
+
+  // Чтобы сразу после выбора варианта перейти к следующему вопросу (необязательно)
+  answersContainer.addEventListener('click', (e) => {
+    if(e.target.classList.contains('answer-option')) {
+      // Можно добавить задержку для плавности
+      setTimeout(nextQuestion, 300);
+    }
+  });
+
 </script>
+
 </body>
 </html>
