@@ -229,17 +229,18 @@
 
   /* Адаптив под мобильные и планшеты */
   @media (max-width: 480px) {
-    body {
-      transform: scale(0.75);
-      transform-origin: top center;
-      width: 133.33vw;
+    html, body {
+      height: 100vh;
+      overflow: hidden; /* Отключаем прокрутку всей страницы */
     }
     .container {
+      transform: scale(0.75);
+      transform-origin: top center;
+      max-height: none !important; /* Убираем ограничение по высоте */
+      overflow-y: visible !important; /* Отключаем прокрутку внутри контейнера */
+      width: 133.33vw; /* Компенсируем масштаб, чтобы контейнер был во всю ширину */
       padding: 25px 20px 30px 20px;
       border-radius: 12px;
-      max-height: 90vh;
-      width: 100vw; /* На мобилах контейнер во всю ширину экрана */
-      max-width: none;
     }
     h1 {
       font-size: 1.4rem;
